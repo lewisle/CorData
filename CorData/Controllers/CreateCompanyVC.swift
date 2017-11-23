@@ -11,9 +11,16 @@ import CoreData
 
 protocol CreateCompanyControllerDelegate {
     func didAddCompany(_ company: Company)
+    func didEditCompany(_ company: Company)
 }
 
 class CreateCompanyVC: UIViewController {
+    
+    var company: Company? {
+        didSet {
+            nameTextField.text = company?.name
+        }
+    }
     
     var delegate: CreateCompanyControllerDelegate?
     
@@ -29,13 +36,17 @@ class CreateCompanyVC: UIViewController {
         return textField
     }()
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationItem.title = company == nil ? "Create Company" : "Edit Company"
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setupUI()
 
         view.backgroundColor = .darkBlue
-        navigationItem.title = "Create Company"
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(handleCancel))
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Save", style: .plain, target: self, action: #selector(handleSave))
     }
@@ -68,6 +79,28 @@ class CreateCompanyVC: UIViewController {
     }
     
     @objc func handleSave() {
+        if company == nil {
+            createCompany()
+        } else {
+            saveCompanyChanges()
+        }
+    }
+    
+    private func saveCompanyChanges() {
+        let context = CoreDataManager.shared.persistentContainer.viewContext
+        company?.name = nameTextField.text
+        
+        do {
+            try context.save()
+            dismiss(animated: true) {
+                self.delegate?.didEditCompany(self.company!)
+            }
+        } catch let saveErr {
+            print("Failed to save company changes: \(saveErr)")
+        }
+    }
+    
+    private func createCompany() {
         let context = CoreDataManager.shared.persistentContainer.viewContext
         let company = NSEntityDescription.insertNewObject(forEntityName: "Company", into: context)
         

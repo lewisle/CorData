@@ -14,12 +14,6 @@ class CompaniesVC: UITableViewController, CreateCompanyControllerDelegate {
     let cellId = "cellId"
     var companies = [Company]()
     
-    func didAddCompany(_ company: Company) {
-        companies.append(company)
-        let newIndexPath = IndexPath(row: companies.count - 1, section: 0)
-        tableView.insertRows(at: [newIndexPath], with: .automatic)
-    }
-    
     private func fetchCompanies() {
         let context = CoreDataManager.shared.persistentContainer.viewContext
         let fetchRequest = NSFetchRequest<Company>(entityName: "Company")
@@ -73,11 +67,32 @@ class CompaniesVC: UITableViewController, CreateCompanyControllerDelegate {
                 print("Failed to delete company: \(deleteErr)")
             }
         }
-        let editAction = UITableViewRowAction(style: .normal, title: "Edit") { (_, indexPath) in
-            print("Editing...")
-        }
+        deleteAction.backgroundColor = .lightRed
+        let editAction = UITableViewRowAction(style: .normal, title: "Edit", handler: editHandlerFunction)
+        editAction.backgroundColor = .darkBlue
         
         return [deleteAction, editAction]
+    }
+    
+    func didAddCompany(_ company: Company) {
+        companies.append(company)
+        let newIndexPath = IndexPath(row: companies.count - 1, section: 0)
+        tableView.insertRows(at: [newIndexPath], with: .automatic)
+    }
+    
+    func didEditCompany(_ company: Company) {
+        if let row = companies.index(of: company) {
+            let reloadIndexPath = IndexPath(row: row, section: 0)
+            tableView.reloadRows(at: [reloadIndexPath], with: .middle)
+        }
+    }
+    
+    fileprivate func editHandlerFunction(action: UITableViewRowAction, indexPath: IndexPath) {
+        let editCompanyVC = CreateCompanyVC()
+        editCompanyVC.delegate = self
+        editCompanyVC.company = companies[indexPath.row]
+        let navController = CustomNavigationController(rootViewController: editCompanyVC)
+        present(navController, animated: true, completion: nil)
     }
     
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
