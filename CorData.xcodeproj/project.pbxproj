@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		F617B3EB1FC6C1D000FECCB2 /* UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F617B3EA1FC6C1D000FECCB2 /* UIView.swift */; };
+		F617B3EE1FC6CD4100FECCB2 /* CorDataModels.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F617B3EC1FC6CD4100FECCB2 /* CorDataModels.xcdatamodeld */; };
 		F65580651FC6B2830022F7B5 /* UIColor+Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = F65580641FC6B2830022F7B5 /* UIColor+Theme.swift */; };
 		F65580671FC6B6670022F7B5 /* Company.swift in Sources */ = {isa = PBXBuildFile; fileRef = F65580661FC6B6670022F7B5 /* Company.swift */; };
 		F65580691FC6BA1B0022F7B5 /* CreateCompanyVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F65580681FC6BA1B0022F7B5 /* CreateCompanyVC.swift */; };
@@ -20,6 +21,7 @@
 
 /* Begin PBXFileReference section */
 		F617B3EA1FC6C1D000FECCB2 /* UIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIView.swift; sourceTree = "<group>"; };
+		F617B3ED1FC6CD4100FECCB2 /* CorDataModels.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = CorDataModels.xcdatamodel; sourceTree = "<group>"; };
 		F65580641FC6B2830022F7B5 /* UIColor+Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Theme.swift"; sourceTree = "<group>"; };
 		F65580661FC6B6670022F7B5 /* Company.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Company.swift; sourceTree = "<group>"; };
 		F65580681FC6BA1B0022F7B5 /* CreateCompanyVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateCompanyVC.swift; sourceTree = "<group>"; };
@@ -52,6 +54,15 @@
 			path = Extensions;
 			sourceTree = "<group>";
 		};
+		F617B3EF1FC6CDBE00FECCB2 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				F65580661FC6B6670022F7B5 /* Company.swift */,
+				F617B3EC1FC6CD4100FECCB2 /* CorDataModels.xcdatamodeld */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
 		F655806A1FC6BB660022F7B5 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
@@ -80,6 +91,7 @@
 		F6FA3DD01FC6A621002F94A8 /* CorData */ = {
 			isa = PBXGroup;
 			children = (
+				F617B3EF1FC6CDBE00FECCB2 /* Models */,
 				F655806A1FC6BB660022F7B5 /* Controllers */,
 				F617B3E91FC6C1A800FECCB2 /* Extensions */,
 				F6FA3DD11FC6A621002F94A8 /* AppDelegate.swift */,
@@ -87,7 +99,6 @@
 				F6FA3DD81FC6A622002F94A8 /* Assets.xcassets */,
 				F6FA3DDA1FC6A622002F94A8 /* LaunchScreen.storyboard */,
 				F6FA3DDD1FC6A622002F94A8 /* Info.plist */,
-				F65580661FC6B6670022F7B5 /* Company.swift */,
 			);
 			path = CorData;
 			sourceTree = "<group>";
@@ -165,6 +176,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F65580651FC6B2830022F7B5 /* UIColor+Theme.swift in Sources */,
+				F617B3EE1FC6CD4100FECCB2 /* CorDataModels.xcdatamodeld in Sources */,
 				F6FA3DD41FC6A622002F94A8 /* CompaniesVC.swift in Sources */,
 				F6FA3DD21FC6A621002F94A8 /* AppDelegate.swift in Sources */,
 				F65580671FC6B6670022F7B5 /* Company.swift in Sources */,
@@ -352,6 +364,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		F617B3EC1FC6CD4100FECCB2 /* CorDataModels.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				F617B3ED1FC6CD4100FECCB2 /* CorDataModels.xcdatamodel */,
+			);
+			currentVersion = F617B3ED1FC6CD4100FECCB2 /* CorDataModels.xcdatamodel */;
+			path = CorDataModels.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = F6FA3DC61FC6A621002F94A8 /* Project object */;
 }
