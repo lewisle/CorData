@@ -15,10 +15,7 @@ class CompaniesVC: UITableViewController, CreateCompanyControllerDelegate {
     var companies = [Company]()
     
     func didAddCompany(_ company: Company) {
-        // 1- modify companies array
         companies.append(company)
-        
-        // 2- insert a new index path into tableView
         let newIndexPath = IndexPath(row: companies.count - 1, section: 0)
         tableView.insertRows(at: [newIndexPath], with: .automatic)
     }
@@ -59,6 +56,28 @@ class CompaniesVC: UITableViewController, CreateCompanyControllerDelegate {
         let navController = CustomNavigationController(rootViewController: createCompanyVC)
         
         present(navController, animated: true, completion: nil)
+    }
+    
+    override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+        let deleteAction = UITableViewRowAction(style: .destructive, title: "Delete") { (_, indexPath) in
+            let company = self.companies[indexPath.row]
+            // Remove company from tableView
+            self.companies.remove(at: indexPath.row)
+            self.tableView.deleteRows(at: [indexPath], with: .automatic)
+            // Remove company from CoreData
+            let context = CoreDataManager.shared.persistentContainer.viewContext
+            context.delete(company)
+            do {
+                try context.save()
+            } catch let deleteErr {
+                print("Failed to delete company: \(deleteErr)")
+            }
+        }
+        let editAction = UITableViewRowAction(style: .normal, title: "Edit") { (_, indexPath) in
+            print("Editing...")
+        }
+        
+        return [deleteAction, editAction]
     }
     
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
