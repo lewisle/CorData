@@ -14,7 +14,7 @@ protocol CreateCompanyControllerDelegate {
     func didEditCompany(_ company: Company)
 }
 
-class CreateCompanyVC: UIViewController {
+class CreateCompanyVC: UIViewController, UINavigationControllerDelegate, UIImagePickerControllerDelegate {
     
     var company: Company? {
         didSet {
@@ -26,6 +26,34 @@ class CreateCompanyVC: UIViewController {
     }
     
     var delegate: CreateCompanyControllerDelegate?
+    
+    lazy var companyImageView: UIImageView = {
+        let imageView = UIImageView(image: #imageLiteral(resourceName: "select_photo_empty"))
+        imageView.isUserInteractionEnabled = true
+        imageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleSelectPhoto)))
+        return imageView
+    }()
+    
+    @objc private func handleSelectPhoto() {
+        let imagePickerController = UIImagePickerController()
+        imagePickerController.delegate = self
+        imagePickerController.allowsEditing = true
+        present(imagePickerController, animated: true, completion: nil)
+    }
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        dismiss(animated: true, completion: nil)
+    }
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+        if let editedImage = info[UIImagePickerControllerEditedImage] as? UIImage {
+            companyImageView.image = editedImage
+        } else if let originalImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
+            companyImageView.image = originalImage
+        }
+        
+        dismiss(animated: true, completion: nil)
+    }
     
     let nameLabel: UILabel = {
         let label = UILabel()
@@ -67,10 +95,16 @@ class CreateCompanyVC: UIViewController {
         lightBlueBgView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
         lightBlueBgView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
         lightBlueBgView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
-        lightBlueBgView.heightAnchor.constraint(equalToConstant: 250).isActive = true
+        lightBlueBgView.heightAnchor.constraint(equalToConstant: 350).isActive = true
+        
+        view.addAutoSubview(companyImageView)
+        companyImageView.topAnchor.constraint(equalTo: view.topAnchor, constant: 10).isActive = true
+        companyImageView.widthAnchor.constraint(equalToConstant: 100).isActive = true
+        companyImageView.heightAnchor.constraint(equalToConstant: 100).isActive = true
+        companyImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         
         view.addAutoSubview(nameLabel)
-        nameLabel.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+        nameLabel.topAnchor.constraint(equalTo: companyImageView.bottomAnchor).isActive = true
         nameLabel.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 16).isActive = true
         nameLabel.widthAnchor.constraint(equalToConstant: 100).isActive = true
         nameLabel.heightAnchor.constraint(equalToConstant: 50).isActive = true
