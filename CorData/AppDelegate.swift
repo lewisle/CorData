@@ -18,18 +18,29 @@ class CustomNavigationController: UINavigationController {
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-
-
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+        
+        setupGlobalNavBar()
         
         window = UIWindow()
         window?.makeKeyAndVisible()
         
-        let companiesVC = ViewController()
+        let companiesVC = CompaniesVC()
         let navController = CustomNavigationController(rootViewController: companiesVC)
         window?.rootViewController = navController
         
         return true
+    }
+    
+    fileprivate func setupGlobalNavBar() {
+        let navBar = UINavigationBar.appearance()
+        navBar.tintColor = .white
+        navBar.isTranslucent = false
+        navBar.barTintColor = .lightRed
+        navBar.prefersLargeTitles = true
+        navBar.titleTextAttributes = [NSAttributedStringKey.foregroundColor: UIColor.white]
+        navBar.largeTitleTextAttributes = [NSAttributedStringKey.foregroundColor: UIColor.white]
     }
 
     func applicationWillResignActive(_ application: UIApplication) {
