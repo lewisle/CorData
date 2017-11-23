@@ -19,6 +19,9 @@ class CreateCompanyVC: UIViewController {
     var company: Company? {
         didSet {
             nameTextField.text = company?.name
+            if let founded = company?.founded {
+                datePicker.date = founded
+            }
         }
     }
     
@@ -34,6 +37,12 @@ class CreateCompanyVC: UIViewController {
         let textField = UITextField()
         textField.placeholder = "Enter name"
         return textField
+    }()
+    
+    let datePicker: UIDatePicker = {
+        let dp = UIDatePicker()
+        dp.datePickerMode = .date
+        return dp
     }()
     
     override func viewWillAppear(_ animated: Bool) {
@@ -58,7 +67,7 @@ class CreateCompanyVC: UIViewController {
         lightBlueBgView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
         lightBlueBgView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
         lightBlueBgView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
-        lightBlueBgView.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        lightBlueBgView.heightAnchor.constraint(equalToConstant: 250).isActive = true
         
         view.addAutoSubview(nameLabel)
         nameLabel.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
@@ -72,6 +81,11 @@ class CreateCompanyVC: UIViewController {
         nameTextField.bottomAnchor.constraint(equalTo: nameLabel.bottomAnchor).isActive = true
         nameTextField.topAnchor.constraint(equalTo: nameLabel.topAnchor).isActive = true
         
+        view.addAutoSubview(datePicker)
+        datePicker.topAnchor.constraint(equalTo: nameLabel.bottomAnchor).isActive = true
+        datePicker.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
+        datePicker.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
+        datePicker.bottomAnchor.constraint(equalTo: lightBlueBgView.bottomAnchor).isActive = true
     }
     
     @objc func handleCancel() {
@@ -89,7 +103,8 @@ class CreateCompanyVC: UIViewController {
     private func saveCompanyChanges() {
         let context = CoreDataManager.shared.persistentContainer.viewContext
         company?.name = nameTextField.text
-        
+        company?.founded = datePicker.date
+
         do {
             try context.save()
             dismiss(animated: true) {
@@ -105,6 +120,7 @@ class CreateCompanyVC: UIViewController {
         let company = NSEntityDescription.insertNewObject(forEntityName: "Company", into: context)
         
         company.setValue(self.nameTextField.text, forKey: "name")
+        company.setValue(self.datePicker.date, forKey: "founded")
         
         do {
             try context.save()

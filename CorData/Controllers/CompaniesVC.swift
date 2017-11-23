@@ -112,7 +112,15 @@ class CompaniesVC: UITableViewController, CreateCompanyControllerDelegate {
         cell.textLabel?.font = UIFont.boldSystemFont(ofSize: 16)
         
         let company = companies[indexPath.row]
-        cell.textLabel?.text = company.name
+        if let name = company.name, let founded = company.founded {
+            let df = DateFormatter()
+            df.dateFormat = "MMM dd, yyyy"
+            let foundedDate = df.string(from: founded)
+            cell.textLabel?.text = "\(name) - Founded: \(foundedDate)"
+        } else {
+            cell.textLabel?.text = company.name
+        }
+        
         
         return cell
     }
