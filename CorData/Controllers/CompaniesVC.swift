@@ -121,6 +121,12 @@ class CompaniesVC: UITableViewController, CreateCompanyControllerDelegate {
             cell.textLabel?.text = company.name
         }
         
+        if let imageData = company.imageData {
+            cell.imageView?.image = UIImage(data: imageData)
+        } else {
+            cell.imageView?.image = #imageLiteral(resourceName: "select_photo_empty")
+        }
+        cell.imageView?.contentMode = .scaleAspectFill
         
         return cell
     }

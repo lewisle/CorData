@@ -22,6 +22,10 @@ class CreateCompanyVC: UIViewController, UINavigationControllerDelegate, UIImage
             if let founded = company?.founded {
                 datePicker.date = founded
             }
+            if let imageData = company?.imageData {
+                companyImageView.image = UIImage(data: imageData)
+                setupCircularImageStyle()
+            }
         }
     }
     
@@ -30,6 +34,7 @@ class CreateCompanyVC: UIViewController, UINavigationControllerDelegate, UIImage
     lazy var companyImageView: UIImageView = {
         let imageView = UIImageView(image: #imageLiteral(resourceName: "select_photo_empty"))
         imageView.isUserInteractionEnabled = true
+        imageView.contentMode = .scaleAspectFill
         imageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleSelectPhoto)))
         return imageView
     }()
@@ -52,7 +57,16 @@ class CreateCompanyVC: UIViewController, UINavigationControllerDelegate, UIImage
             companyImageView.image = originalImage
         }
         
+        setupCircularImageStyle()
+        
         dismiss(animated: true, completion: nil)
+    }
+    
+    fileprivate func setupCircularImageStyle() {
+        companyImageView.layer.cornerRadius = companyImageView.frame.width / 2
+        companyImageView.clipsToBounds = true
+        companyImageView.layer.borderColor = UIColor.darkBlue.cgColor
+        companyImageView.layer.borderWidth = 2
     }
     
     let nameLabel: UILabel = {
@@ -138,7 +152,11 @@ class CreateCompanyVC: UIViewController, UINavigationControllerDelegate, UIImage
         let context = CoreDataManager.shared.persistentContainer.viewContext
         company?.name = nameTextField.text
         company?.founded = datePicker.date
-
+        if let companyImage = companyImageView.image {
+            let imageData = UIImageJPEGRepresentation(companyImage, 1)
+            company?.imageData = imageData
+        }
+        
         do {
             try context.save()
             dismiss(animated: true) {
@@ -155,6 +173,10 @@ class CreateCompanyVC: UIViewController, UINavigationControllerDelegate, UIImage
         
         company.setValue(self.nameTextField.text, forKey: "name")
         company.setValue(self.datePicker.date, forKey: "founded")
+        if let companyImage = companyImageView.image {
+            let imageData = UIImageJPEGRepresentation(companyImage, 1)
+            company.setValue(imageData, forKey: "imageData")
+        }
         
         do {
             try context.save()
