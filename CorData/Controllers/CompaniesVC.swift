@@ -32,6 +32,8 @@ class CompaniesVC: UITableViewController, CreateCompanyControllerDelegate {
         
         fetchCompanies()
         
+        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Reset", style: .plain, target: self, action: #selector(handleReset))
+        
         view.backgroundColor = .white
         navigationItem.title = "Companies"
         
@@ -44,12 +46,42 @@ class CompaniesVC: UITableViewController, CreateCompanyControllerDelegate {
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "plus").withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(handleAddCompany))
     }
     
+    @objc func handleReset() {
+        let context = CoreDataManager.shared.persistentContainer.viewContext
+        let batchDeleteRequest = NSBatchDeleteRequest(fetchRequest: Company.fetchRequest())
+        do {
+            try context.execute(batchDeleteRequest)
+            var indexPathsToRemove = [IndexPath]()
+            for (index, _) in companies.enumerated() {
+                let indexPath = IndexPath(row: index, section: 0)
+                indexPathsToRemove.append(indexPath)
+            }
+            companies.removeAll()
+            tableView.deleteRows(at: indexPathsToRemove, with: .left)
+        } catch let delErr {
+            print("Failed to batch delete object from Core Data: \(delErr)")
+        }
+    }
+    
     @objc func handleAddCompany() {
         let createCompanyVC = CreateCompanyVC()
         createCompanyVC.delegate = self
         let navController = CustomNavigationController(rootViewController: createCompanyVC)
         
         present(navController, animated: true, completion: nil)
+    }
+    
+    override func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        let label = UILabel()
+        label.text = "No companies available..."
+        label.textColor = .white
+        label.textAlignment = .center
+        label.font = UIFont.boldSystemFont(ofSize: 16)
+        return label
+    }
+    
+    override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        return companies.count == 0 ? 150 : 0
     }
     
     override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
