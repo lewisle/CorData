@@ -41,7 +41,7 @@ class CompaniesVC: UITableViewController, CreateCompanyControllerDelegate {
         tableView.separatorColor = .white
         tableView.tableFooterView = UIView()
         
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellId)
+        tableView.register(CompanyCell.self, forCellReuseIdentifier: cellId)
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "plus").withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(handleAddCompany))
     }
@@ -138,29 +138,15 @@ class CompaniesVC: UITableViewController, CreateCompanyControllerDelegate {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath)
-        cell.backgroundColor = .tealColor
-        cell.textLabel?.textColor = .white
-        cell.textLabel?.font = UIFont.boldSystemFont(ofSize: 16)
-        
+        let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath) as! CompanyCell
         let company = companies[indexPath.row]
-        if let name = company.name, let founded = company.founded {
-            let df = DateFormatter()
-            df.dateFormat = "MMM dd, yyyy"
-            let foundedDate = df.string(from: founded)
-            cell.textLabel?.text = "\(name) - Founded: \(foundedDate)"
-        } else {
-            cell.textLabel?.text = company.name
-        }
-        
-        if let imageData = company.imageData {
-            cell.imageView?.image = UIImage(data: imageData)
-        } else {
-            cell.imageView?.image = #imageLiteral(resourceName: "select_photo_empty")
-        }
-        cell.imageView?.contentMode = .scaleAspectFill
+        cell.company = company
         
         return cell
+    }
+    
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 60
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
