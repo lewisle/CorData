@@ -98,7 +98,7 @@ class CreateCompanyVC: UIViewController, UINavigationControllerDelegate, UIImage
         setupUI()
 
         view.backgroundColor = .darkBlue
-        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(handleCancel))
+        setupCancelButtonInNavBar()
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Save", style: .plain, target: self, action: #selector(handleSave))
     }
     
@@ -134,10 +134,6 @@ class CreateCompanyVC: UIViewController, UINavigationControllerDelegate, UIImage
         datePicker.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
         datePicker.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
         datePicker.bottomAnchor.constraint(equalTo: lightBlueBgView.bottomAnchor).isActive = true
-    }
-    
-    @objc func handleCancel() {
-        dismiss(animated: true, completion: nil)
     }
     
     @objc func handleSave() {

@@ -10,6 +10,13 @@ import UIKit
 
 extension CompaniesVC {
     
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let company = self.companies[indexPath.row]
+        let employeesVC = EmployeesVC()
+        employeesVC.company = company
+        navigationController?.pushViewController(employeesVC, animated: true)
+    }
+    
     override func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         let label = UILabel()
         label.text = "No companies available..."
@@ -49,7 +56,7 @@ extension CompaniesVC {
         let editCompanyVC = CreateCompanyVC()
         editCompanyVC.delegate = self
         editCompanyVC.company = companies[indexPath.row]
-        let navController = CustomNavigationController(rootViewController: editCompanyVC)
+        let navController = UINavigationController(rootViewController: editCompanyVC)
         present(navController, animated: true, completion: nil)
     }
     

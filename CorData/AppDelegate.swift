@@ -8,12 +8,6 @@
 
 import UIKit
 
-class CustomNavigationController: UINavigationController {
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .lightContent
-    }
-}
-
 extension UINavigationController {
     open override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
@@ -33,7 +27,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window?.makeKeyAndVisible()
         
         let companiesVC = CompaniesVC()
-        let navController = CustomNavigationController(rootViewController: companiesVC)
+        let navController = UINavigationController(rootViewController: companiesVC)
         window?.rootViewController = navController
         
         return true
