@@ -8,7 +8,13 @@
 
 import UIKit
 
+protocol CreateEmployeeControllerDelegate {
+    func didAddEmployee(employee: Employee)
+}
+
 class CreateEmployeeVC: UIViewController {
+    
+    var delegate: CreateEmployeeControllerDelegate?
     
     let nameLabel: UILabel = {
         let label = UILabel()
@@ -34,12 +40,14 @@ class CreateEmployeeVC: UIViewController {
     
     @objc private func handleSave() {
         guard let employeeName = nameTextField.text else { return }
-        CoreDataManager.shared.createEmployee(name: employeeName) { (error) in
+        CoreDataManager.shared.createEmployee(name: employeeName) { (error, employee) in
             if let err = error {
                 // Maybe show a friendly message here
                 print(err)
             } else {
-                dismiss(animated: true, completion: nil)
+                dismiss(animated: true, completion: {
+                    self.delegate?.didAddEmployee(employee: employee!)
+                })
             }
         }
     }
