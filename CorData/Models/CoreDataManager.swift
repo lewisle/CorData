@@ -36,15 +36,29 @@ struct CoreDataManager {
         }
     }
     
-    func resetCompanies(completion: (_ error: String?) -> ()) {
+    func resetCompanies(completion: (_ error: Error?) -> ()) {
         let context = persistentContainer.viewContext
         let batchDeleteRequest = NSBatchDeleteRequest(fetchRequest: Company.fetchRequest())
         do {
             try context.execute(batchDeleteRequest)
             completion(nil)
         } catch let delErr {
-            let error = "Failed to batch delete companies: \(delErr)"
-            completion(error)
+            print("Failed to batch delete companies: \(delErr)")
+            completion(delErr)
+        }
+    }
+    
+    func createEmployee(name: String, completion: (_ error: Error?) -> ()) {
+        let context = persistentContainer.viewContext
+        let employee = NSEntityDescription.insertNewObject(forEntityName: "Employee", into: context)
+        employee.setValue(name, forKey: "name")
+        
+        do {
+            try context.save()
+            completion(nil)
+        } catch let err {
+            print("Failed to create employee: \(err)")
+            completion(err)
         }
     }
     

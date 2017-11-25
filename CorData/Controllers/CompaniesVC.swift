@@ -32,8 +32,9 @@ class CompaniesVC: UITableViewController {
     
     @objc func handleReset() {
         CoreDataManager.shared.resetCompanies { (error) in
-            if error != nil {
-                // maybe show a user-frendly messsage here...
+            if let err = error {
+                // maybe show a user-friendly messsage here...
+                print(err)
             } else {
                 var indexPathsToRemove = [IndexPath]()
                 for (index, _) in companies.enumerated() {

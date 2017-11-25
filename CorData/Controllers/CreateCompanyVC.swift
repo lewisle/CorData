@@ -96,20 +96,13 @@ class CreateCompanyVC: UIViewController, UINavigationControllerDelegate, UIImage
         super.viewDidLoad()
         
         setupUI()
-
         view.backgroundColor = .darkBlue
         setupCancelButtonInNavBar()
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Save", style: .plain, target: self, action: #selector(handleSave))
     }
     
-    fileprivate func setupUI() {
-        let lightBlueBgView = UIView()
-        lightBlueBgView.backgroundColor = .lightBlue
-        view.addAutoSubview(lightBlueBgView)
-        lightBlueBgView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
-        lightBlueBgView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
-        lightBlueBgView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
-        lightBlueBgView.heightAnchor.constraint(equalToConstant: 350).isActive = true
+    private func setupUI() {
+        let lightBlueBgView = setupLightBlueBackgroundView(withHeight: 350)
         
         view.addAutoSubview(companyImageView)
         companyImageView.topAnchor.constraint(equalTo: view.topAnchor, constant: 10).isActive = true
