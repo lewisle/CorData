@@ -23,4 +23,29 @@ struct CoreDataManager {
         return container
     }()
     
+    func fetchCompanies() -> [Company] {
+        let context = persistentContainer.viewContext
+        let fetchRequest = NSFetchRequest<Company>(entityName: "Company")
+        
+        do {
+            let companies = try context.fetch(fetchRequest)
+            return companies
+        } catch let fetchErr {
+            print("Failed to fetch companies: \(fetchErr)")
+            return []
+        }
+    }
+    
+    func resetCompanies(completion: (_ error: String?) -> ()) {
+        let context = persistentContainer.viewContext
+        let batchDeleteRequest = NSBatchDeleteRequest(fetchRequest: Company.fetchRequest())
+        do {
+            try context.execute(batchDeleteRequest)
+            completion(nil)
+        } catch let delErr {
+            let error = "Failed to batch delete companies: \(delErr)"
+            completion(error)
+        }
+    }
+    
 }
