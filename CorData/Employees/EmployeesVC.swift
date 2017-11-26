@@ -31,20 +31,14 @@ class EmployeesVC: UITableViewController, CreateEmployeeControllerDelegate {
     }
     
     private func fetchEmployees() {
-        let context = CoreDataManager.shared.persistentContainer.viewContext
-        let request = NSFetchRequest<Employee>(entityName: "Employee")
-        
-        do {
-            let employees = try context.fetch(request)
-            self.employees = employees
-        } catch let err {
-            print("Failed to fetch employees: \(err)")
-        }
+        guard let companyEmployees = company?.employees?.allObjects as? [Employee] else { return }
+        self.employees = companyEmployees
     }
     
     @objc private func handleAddEmployee() {
         let createEmployeeVC = CreateEmployeeVC()
         createEmployeeVC.delegate = self
+        createEmployeeVC.company = self.company
         let navController = UINavigationController(rootViewController: createEmployeeVC)
         present(navController, animated: true, completion: nil)
     }
