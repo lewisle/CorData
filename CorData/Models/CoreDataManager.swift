@@ -48,13 +48,14 @@ struct CoreDataManager {
         }
     }
     
-    func createEmployee(name: String, company: Company, completion: (Error?, Employee?) -> ()) {
+    func createEmployee(name: String, birthday: Date, company: Company, completion: (Error?, Employee?) -> ()) {
         let context = persistentContainer.viewContext
         let employee = Employee(context: context)
         employee.name = name
         employee.employeeInfo = {
             let employeeInfo = EmployeeInfo(context: context)
             employeeInfo.taxId = "123"
+            employeeInfo.birthday = birthday
             return employeeInfo
         }()
         employee.company = company

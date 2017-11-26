@@ -30,6 +30,18 @@ class CreateEmployeeVC: UIViewController {
         return textField
     }()
     
+    let birthdayLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Birthday"
+        return label
+    }()
+    
+    let birthdayTextField: UITextField = {
+        let textField = UITextField()
+        textField.placeholder = "MM/dd/yyyy"
+        return textField
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .darkBlue
@@ -43,7 +55,20 @@ class CreateEmployeeVC: UIViewController {
     @objc private func handleSave() {
         guard let employeeName = nameTextField.text else { return }
         guard let company = company else { return }
-        CoreDataManager.shared.createEmployee(name: employeeName, company: company) { (error, employee) in
+        guard let birthdayText = birthdayTextField.text else { return }
+        if birthdayText.isEmpty {
+            showError(title: "Empty Birthday", message: "You have not entered a birthday.")
+            return
+        }
+        
+        let df = DateFormatter()
+        df.dateFormat = "MM/dd/yyyy"
+        guard let birthdayDate = df.date(from: birthdayText) else {
+            showError(title: "Bad Date", message: "Birthday date entered is not valid.")
+            return
+        }
+        
+        CoreDataManager.shared.createEmployee(name: employeeName, birthday: birthdayDate, company: company) { (error, employee) in
             if let err = error {
                 // Maybe show a friendly message here
                 print(err)
@@ -55,8 +80,14 @@ class CreateEmployeeVC: UIViewController {
         }
     }
     
+    private func showError(title: String, message: String) {
+        let alertController = UIAlertController(title: String, message: String, preferredStyle: .alert)
+        alertController.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+        present(alertController, animated: true, completion: nil)
+    }
+    
     private func setupUI() {
-        _ = setupLightBlueBackgroundView(withHeight: 50)
+        _ = setupLightBlueBackgroundView(withHeight: 100)
         
         view.addAutoSubview(nameLabel)
         nameLabel.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
@@ -69,6 +100,18 @@ class CreateEmployeeVC: UIViewController {
         nameTextField.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
         nameTextField.bottomAnchor.constraint(equalTo: nameLabel.bottomAnchor).isActive = true
         nameTextField.topAnchor.constraint(equalTo: nameLabel.topAnchor).isActive = true
+        
+        view.addAutoSubview(birthdayLabel)
+        birthdayLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor).isActive = true
+        birthdayLabel.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 16).isActive = true
+        birthdayLabel.widthAnchor.constraint(equalToConstant: 100).isActive = true
+        birthdayLabel.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        
+        view.addAutoSubview(birthdayTextField)
+        birthdayTextField.leftAnchor.constraint(equalTo: birthdayLabel.rightAnchor).isActive = true
+        birthdayTextField.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
+        birthdayTextField.bottomAnchor.constraint(equalTo: birthdayLabel.bottomAnchor).isActive = true
+        birthdayTextField.topAnchor.constraint(equalTo: birthdayLabel.topAnchor).isActive = true
     }
 
 }

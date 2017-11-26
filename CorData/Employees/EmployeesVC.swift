@@ -57,9 +57,15 @@ class EmployeesVC: UITableViewController, CreateEmployeeControllerDelegate {
         let employee = employees[indexPath.row]
         cell.textLabel?.text = employee.name
         
-        if let taxId = employee.employeeInfo?.taxId {
-            cell.textLabel?.text = "\(employee.name ?? "") \(taxId)"
+        if let birthday = employee.employeeInfo?.birthday {
+            let df = DateFormatter()
+            df.dateFormat = "MMM dd, yyyy"
+            cell.textLabel?.text = "\(employee.name ?? "") / \(df.string(from: birthday))"
         }
+        
+//        if let taxId = employee.employeeInfo?.taxId {
+//            cell.textLabel?.text = "\(employee.name ?? "") \(taxId)"
+//        }
         
         cell.backgroundColor = .tealColor
         cell.textLabel?.textColor = .white
