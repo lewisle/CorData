@@ -18,6 +18,7 @@
 		F6A0E3531FC9225F001BE00E /* UIViewController+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6A0E3521FC9225F001BE00E /* UIViewController+Helpers.swift */; };
 		F6A0E3551FC92352001BE00E /* CreateEmployeeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6A0E3541FC92352001BE00E /* CreateEmployeeVC.swift */; };
 		F6DC912E1FC8726900B81C3C /* CompanyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6DC912D1FC8726900B81C3C /* CompanyCell.swift */; };
+		F6F78A2C1FCAEFDB0062B011 /* EmployeeType.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6F78A2B1FCAEFDB0062B011 /* EmployeeType.swift */; };
 		F6FA3DD21FC6A621002F94A8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6FA3DD11FC6A621002F94A8 /* AppDelegate.swift */; };
 		F6FA3DD41FC6A622002F94A8 /* CompaniesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6FA3DD31FC6A622002F94A8 /* CompaniesVC.swift */; };
 		F6FA3DD71FC6A622002F94A8 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F6FA3DD51FC6A622002F94A8 /* Main.storyboard */; };
@@ -37,6 +38,7 @@
 		F6A0E3521FC9225F001BE00E /* UIViewController+Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Helpers.swift"; sourceTree = "<group>"; };
 		F6A0E3541FC92352001BE00E /* CreateEmployeeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateEmployeeVC.swift; sourceTree = "<group>"; };
 		F6DC912D1FC8726900B81C3C /* CompanyCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompanyCell.swift; sourceTree = "<group>"; };
+		F6F78A2B1FCAEFDB0062B011 /* EmployeeType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmployeeType.swift; sourceTree = "<group>"; };
 		F6FA3DCE1FC6A621002F94A8 /* CorData.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CorData.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F6FA3DD11FC6A621002F94A8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F6FA3DD31FC6A622002F94A8 /* CompaniesVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompaniesVC.swift; sourceTree = "<group>"; };
@@ -100,6 +102,7 @@
 			children = (
 				F6A0E34F1FC920A3001BE00E /* EmployeesVC.swift */,
 				F6A0E3541FC92352001BE00E /* CreateEmployeeVC.swift */,
+				F6F78A2B1FCAEFDB0062B011 /* EmployeeType.swift */,
 			);
 			path = Employees;
 			sourceTree = "<group>";
@@ -216,6 +219,7 @@
 				F617B3EE1FC6CD4100FECCB2 /* CorDataModels.xcdatamodeld in Sources */,
 				F6FA3DD41FC6A622002F94A8 /* CompaniesVC.swift in Sources */,
 				F6FA3DD21FC6A621002F94A8 /* AppDelegate.swift in Sources */,
+				F6F78A2C1FCAEFDB0062B011 /* EmployeeType.swift in Sources */,
 				F6DC912E1FC8726900B81C3C /* CompanyCell.swift in Sources */,
 				F617B3EB1FC6C1D000FECCB2 /* UIView.swift in Sources */,
 				F61C80231FC6EEB300B4E086 /* CoreDataManager.swift in Sources */,
