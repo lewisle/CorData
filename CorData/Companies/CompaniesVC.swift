@@ -26,8 +26,20 @@ class CompaniesVC: UITableViewController {
         tableView.register(CompanyCell.self, forCellReuseIdentifier: cellId)
         
         navigationItem.title = "Companies"
-        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Reset", style: .plain, target: self, action: #selector(handleReset))
+        navigationItem.leftBarButtonItems = [
+            UIBarButtonItem(title: "Reset", style: .plain, target: self, action: #selector(handleReset)),
+            UIBarButtonItem(title: "Do Work", style: .plain, target: self, action: #selector(doWork))
+        ]
         setupPlusButtonInNavBar(#selector(handleAddCompany))
+    }
+    
+    @objc func doWork() {
+        CoreDataManager.shared.persistentContainer.performBackgroundTask { (bgContext) in
+            // Background tasks go here...
+            (1...100000).forEach({ (item) in
+                print(item)
+            })
+        }
     }
     
     @objc func handleReset() {
