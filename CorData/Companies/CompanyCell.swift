@@ -13,13 +13,16 @@ class CompanyCell: UITableViewCell {
     var company: Company? {
         didSet {
             nameFoundedDateLabel.text = company?.name
-            if let name = company?.name, let founded = company?.founded {
+            if let name = company?.name, let founded = company?.founded, let numEmployees = company?.numEmployees {
                 let df = DateFormatter()
                 df.dateFormat = "MMM dd, yyyy"
                 let foundedDate = df.string(from: founded)
-                nameFoundedDateLabel.text = "\(name) - Founded: \(foundedDate)"
+                nameFoundedDateLabel.text = "\(name) - Founded: \(foundedDate) - \(numEmployees)"
             } else {
-                nameFoundedDateLabel.text = company?.name
+                if let company = company {
+                    nameFoundedDateLabel.text = company.name
+                    nameFoundedDateLabel.text = "\(company.name!): \(company.numEmployees!)"
+                }
             }
             
             if let imageData = company?.imageData {

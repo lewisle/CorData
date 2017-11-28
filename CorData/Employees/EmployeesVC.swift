@@ -97,12 +97,12 @@ class EmployeesVC: UITableViewController, CreateEmployeeControllerDelegate {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath)
         let employee = allEmployees[indexPath.section][indexPath.row]
         
-        cell.textLabel?.text = employee.name
+        cell.textLabel?.text = employee.fullName
         
         if let birthday = employee.employeeInfo?.birthday {
             let df = DateFormatter()
             df.dateFormat = "MMM dd, yyyy"
-            cell.textLabel?.text = "\(employee.name ?? "") / \(df.string(from: birthday))"
+            cell.textLabel?.text = "\(employee.fullName ?? "") / \(df.string(from: birthday))"
         }
         
         cell.backgroundColor = .tealColor

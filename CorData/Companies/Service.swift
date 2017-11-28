@@ -44,7 +44,7 @@ struct Service {
                     
                     jsonCompany.employees?.forEach({ (jsonEmployee) in
                         let employee = Employee(context: privateContext)
-                        employee.name = jsonEmployee.name
+                        employee.fullName = jsonEmployee.name
                         employee.type = jsonEmployee.type
                         let employeeInfo = EmployeeInfo(context: privateContext)
                         let birthdayDate = df.date(from: jsonEmployee.birthday)
