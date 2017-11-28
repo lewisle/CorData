@@ -41,9 +41,7 @@ class CompaniesAutoUpdateVC: UITableViewController, NSFetchedResultsControllerDe
         ]
         
         tableView.register(CompanyCell.self, forCellReuseIdentifier: cellId)
-        fetchedResultsController.fetchedObjects?.forEach({ (company) in
-            print(company.name ?? "")
-        })
+        Service.shared.downloadCompaniesFromServer()
     }
     
     @objc func handleAdd() {
@@ -56,7 +54,7 @@ class CompaniesAutoUpdateVC: UITableViewController, NSFetchedResultsControllerDe
     
     @objc func handleDelete() {
         let request: NSFetchRequest<Company> = Company.fetchRequest()
-        request.predicate = NSPredicate(format: "name CONTAINS %@", "B")
+        //request.predicate = NSPredicate(format: "name CONTAINS %@", "B")
         let context = CoreDataManager.shared.persistentContainer.viewContext
         let companiesWithB = try? context.fetch(request)
         
