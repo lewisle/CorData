@@ -28,9 +28,48 @@ class CompaniesVC: UITableViewController {
         navigationItem.title = "Companies"
         navigationItem.leftBarButtonItems = [
             UIBarButtonItem(title: "Reset", style: .plain, target: self, action: #selector(handleReset)),
-            UIBarButtonItem(title: "Do Updates", style: .plain, target: self, action: #selector(doUpdates))
+            UIBarButtonItem(title: "Do BG", style: .plain, target: self, action: #selector(doNestedUpdates))
         ]
         setupPlusButtonInNavBar(#selector(handleAddCompany))
+    }
+    
+    @objc func doNestedUpdates() {
+        DispatchQueue.global(qos: .background).async {
+            // First construct a custom MOC
+            let privateContext = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
+            privateContext.parent = CoreDataManager.shared.persistentContainer.viewContext
+            
+            // Execute updates on privateContext new
+            let request: NSFetchRequest<Company> = Company.fetchRequest()
+            request.fetchLimit = 1
+            
+            do {
+                let companies = try privateContext.fetch(request)
+                companies.forEach({ (company) in
+                    print(company.name ?? "")
+                    company.name = "C: \(company.name ?? "")"
+                })
+                
+                do {
+                    try privateContext.save()
+                    DispatchQueue.main.async {
+                        do {
+                            let context = CoreDataManager.shared.persistentContainer.viewContext
+                            if context.hasChanges {
+                                try context.save()
+                            }
+                            self.tableView.reloadData()
+                        } catch let finalSaveErr {
+                            print("Failed to save on main context: \(finalSaveErr)")
+                        }
+                    }
+                } catch let saveErr {
+                    print("Failed to save on private context: \(saveErr)")
+                }
+            } catch let fetchErr {
+                print("Failed to fetch on private context: \(fetchErr)")
+            }
+        }
     }
     
     @objc func doUpdates() {
