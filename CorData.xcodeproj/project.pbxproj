@@ -34,6 +34,7 @@
 		F61C80221FC6EEB300B4E086 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		F63BF51E1FCD4066002215B8 /* CompaniesAutoUpdateVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompaniesAutoUpdateVC.swift; sourceTree = "<group>"; };
 		F63BF5201FCD54D2002215B8 /* Service.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Service.swift; sourceTree = "<group>"; };
+		F63BF5221FCD61BB002215B8 /* CorDataModels_v1.1.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = CorDataModels_v1.1.xcdatamodel; sourceTree = "<group>"; };
 		F65580641FC6B2830022F7B5 /* UIColor+Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Theme.swift"; sourceTree = "<group>"; };
 		F65580681FC6BA1B0022F7B5 /* CreateCompanyVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateCompanyVC.swift; sourceTree = "<group>"; };
 		F6A0E34B1FC9126A001BE00E /* CompaniesVC+CreateCompany.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CompaniesVC+CreateCompany.swift"; sourceTree = "<group>"; };
@@ -421,6 +422,7 @@
 		F617B3EC1FC6CD4100FECCB2 /* CorDataModels.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				F63BF5221FCD61BB002215B8 /* CorDataModels_v1.1.xcdatamodel */,
 				F617B3ED1FC6CD4100FECCB2 /* CorDataModels.xcdatamodel */,
 			);
 			currentVersion = F617B3ED1FC6CD4100FECCB2 /* CorDataModels.xcdatamodel */;
