@@ -41,7 +41,16 @@ class CompaniesAutoUpdateVC: UITableViewController, NSFetchedResultsControllerDe
         ]
         
         tableView.register(CompanyCell.self, forCellReuseIdentifier: cellId)
+        
+        let refreshControl = UIRefreshControl()
+        refreshControl.tintColor = .white
+        refreshControl.addTarget(self, action: #selector(handleRefresh), for: .valueChanged)
+        self.refreshControl = refreshControl
+    }
+    
+    @objc func handleRefresh() {
         Service.shared.downloadCompaniesFromServer()
+        refreshControl?.endRefreshing()
     }
     
     @objc func handleAdd() {
@@ -128,5 +137,11 @@ class CompaniesAutoUpdateVC: UITableViewController, NSFetchedResultsControllerDe
         cell.company = company
         
         return cell
+    }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let employeesListController = EmployeesVC()
+        employeesListController.company = fetchedResultsController.object(at: indexPath)
+        navigationController?.pushViewController(employeesListController, animated: true)
     }
 }
